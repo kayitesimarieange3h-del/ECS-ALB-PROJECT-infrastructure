@@ -37,23 +37,23 @@ jobs:
 
 
       # ---------- Terraform ----------
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.5
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v3
+      #   with:
+      #     terraform_version: 1.9.5
 
-      - name: Terraform Init
-        working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform init -input=false
+      # - name: Terraform Init
+      #   working-directory: ${{ env.TF_WORKING_DIR }}
+      #   run: terraform init -input=false
 
-      - name: Terraform Plan
-        working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform plan -input=false
+      # - name: Terraform Plan
+      #   working-directory: ${{ env.TF_WORKING_DIR }}
+      #   run: terraform plan -input=false
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
-        working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform apply -auto-approve -input=false
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main'
+      #   working-directory: ${{ env.TF_WORKING_DIR }}
+      #   run: terraform apply -auto-approve -input=false
 
       # ---------- Build & Push Image ----------
       - name: Login to Amazon ECR
