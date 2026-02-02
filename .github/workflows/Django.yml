@@ -5,14 +5,18 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  TF_WORKING_DIR: infra          # folder where your .tf files live
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} # e.g. django-media-analytics-repo
+  ROLE_TO_ASSUME: ${{ secrets.ROLE_TO_ASSUME }}
+  TF_WORKING_DIR: django-app
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   ECS_CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
   ECS_SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
-  CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }} # must match var.container_name in TF
+  CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
 
 jobs:
   terraform-and-deploy:
@@ -22,11 +26,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      #- name: Configure AWS credentials
-       # uses: aws-actions/configure-aws-credentials@v4
-       # with:
-         # role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/arn:aws:iam::487615744138:oidc-provider/token.actions.githubusercontent.com
-          #aws-region: ${{ env.AWS_REGION }}
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verify identity
+        run: aws sts get-caller-identity
 
 
       # ---------- Terraform ----------
