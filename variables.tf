@@ -31,7 +31,7 @@ variable "container_name" {
 variable "container_image" {
   description = "Container image"
   type        = string
-  default     = "kayitesimarieange3h/resume-update"
+  default     = "nginx:latest"
 }
 
 variable "container_port" {
