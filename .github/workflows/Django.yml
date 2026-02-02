@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  #AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   TF_WORKING_DIR: infra          # folder where your .tf files live
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} # e.g. django-media-analytics-repo
@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/token.actions.githubusercontent.com
-          #aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
 
       # ---------- Terraform ----------
