@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "project_name" {
   description = "Project name for resource naming"
   type        = string
-  default     = "nginx-fargate"
+  default     = "Ndiang"
 }
 
 variable "vpc_cidr" {

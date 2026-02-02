@@ -230,8 +230,8 @@ resource "aws_ecs_service" "main" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups = [aws_security_group.ecs_tasks.id]
-    subnets         = aws_subnet.public[*].id
+    security_groups  = [aws_security_group.ecs_tasks.id]
+    subnets          = aws_subnet.public[*].id
     assign_public_ip = true
   }
 
